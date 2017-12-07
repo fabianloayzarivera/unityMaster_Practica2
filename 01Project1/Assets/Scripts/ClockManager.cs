@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ClockManager : MonoBehaviour {
 
-	public float hoursAngle = 0;
-	public float minutesAngle = 0;
-	public float secondsAngle = 0;
+	private float hoursAngle = 0;
+	private float minutesAngle = 0;
+	private float secondsAngle = 0;
+	public bool discrete = true;
 
 	public GameObject hoursPivot;
 	public GameObject minutesPivot;
@@ -37,10 +38,13 @@ public class ClockManager : MonoBehaviour {
 			if (secondsAngle == 360)
 				secondsAngle = 0;
 			secondsAngle += 6;
-			secondsPivot.transform.Rotate (0, 6, 0);
+			if(discrete)
+				secondsPivot.transform.Rotate (0, 6, 0);
 			timePassed = 0;
 
 		}
+		if(!discrete)
+			secondsPivot.transform.Rotate (0, 6 * Time.deltaTime, 0);
 		minutesPivot.transform.Rotate (0, (0.1f * Time.deltaTime), 0);
 		hoursPivot.transform.Rotate (0, (0.0083f * Time.deltaTime), 0);
 
